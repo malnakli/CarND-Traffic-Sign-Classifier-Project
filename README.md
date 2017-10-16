@@ -1,6 +1,6 @@
-#**Traffic Sign Recognition** 
+# Traffic Sign Recognition
 
----
+
 
 **Build a Traffic Sign Recognition Project**
 
@@ -15,28 +15,28 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/visualization.jpg "Visualization"
-[image2]: ./examples/grayscale.jpg "Grayscaling"
-[image3]: ./examples/random_noise.jpg "Random Noise"
-[image4]: ./examples/placeholder.png "Traffic Sign 1"
-[image5]: ./examples/placeholder.png "Traffic Sign 2"
+[image1]: ./examples/visualization.png "Visualization"
+[image2]: ./examples/augment.png "Augmentation"
+[image3]: ./examples/augment_original.png "Aug Original"
+[image4]: ./examples/grayscale.png "Grayscale"
+[image5]: ./examples/gray_original.png "Gray original"
 [image6]: ./examples/placeholder.png "Traffic Sign 3"
 [image7]: ./examples/placeholder.png "Traffic Sign 4"
 [image8]: ./examples/placeholder.png "Traffic Sign 5"
 
 ## Rubric Points
 
-###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
+### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
 
 ---
 
-####1. Provide README that includes all the rubric points and how you addressed each one. The submission includes the project code.
+#### 1. Provide README that includes all the rubric points and how you addressed each one. The submission includes the project code.
 
 You're reading it! and here is a link to my [project code](https://github.com/malnakli/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb)
 
-###Data Set Summary & Exploration
+### Data Set Summary & Exploration
 
-####1. Provide a basic summary of the data set. In the code, the analysis should be done using python, numpy and/or pandas methods rather than hardcoding results manually.
+#### 1. Provide a basic summary of the data set. In the code, the analysis should be done using python, numpy and/or pandas methods rather than hardcoding results manually.
 
 I used the numpy library and defualt python  to calculate summary statistics of the traffic
 signs data set:
@@ -47,93 +47,92 @@ signs data set:
 * The shape of a traffic sign image is (32, 32, 3)
 * The number of unique classes/labels in the data set is 43
 
-####2. Include an exploratory visualization of the dataset.
+#### 2. Include an exploratory visualization of the dataset.
 
 Here is an exploratory visualization of the data set. It is a bar chart showing how the data distribute
 
 ![alt text][image1]
 
-###Design and Test a Model Architecture
+### Design and Test a Model Architecture
 
-####1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
+#### 1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
 
-As a first step, I decided add additinal data because the variance between the dataset is very high which is 392816, and the mean is 809. Therefore, I decided to use agumtation in order to generate fake data. the [imgaug](http://imgaug.readthedocs.io/en/latest/index.html ) library was chosen to facilitate the agumtation. 
+As a first step, I decided add additinal data because the variance between the dataset is very high which is 392816, and the mean is 809. Therefore, I decided to use agumtation in order to generate fake data. the [imgaug](http://imgaug.readthedocs.io/en/latest/index.html ) library was chosen to facilitate the agumtation.
+
 There many techniques were select look at **augment_data(images)** for more info. Here is some of them
-rotatation: to teach the network how to recover from a poor position. 
-CropAndPad: I put a small percetage (-0.25, 0.25) in order to make sure the sign still present on an image, but a small piece of the sign is missing. 
-ChangeColorspace: I found that changing the color space it give better result.
+**rotatation:** to teach the network how to recover from a poor position. 
+**CropAndPad:** I put a small percetage (-0.25, 0.25) in order to make sure the sign still present on an image, but a small piece of the sign is missing. 
+**ChangeColorspace:** I found that changing the color space it give better result.
 
 Here is an example of an original image and an augmented image:
 
+![augmented][image2] ![original][image3]
 
 
-![original augmented][]
+As a second step, I normalized the image data by using (sklearn.preprocessing.scale function).
+The reason behind normalization is that if a feature has a variance that is orders of magnitude larger than others, it may  make the estimator unable to learn from other features correctly as expected.
 
-As a second step, I normalized the image data because If a feature has a variance that is orders of magnitude larger than others, it may  make the estimator unable to learn from other features correctly as expected.
+Lastly I decided to convert the image to gray because I want to teach the netwrok that color does not matter on determining the trafic sign.
 
-
-I decided to convert the image to gray because I want to teach the netwrok that color does not  matter on determining the trafic sign
-
-To add more data to the the data set, I used the following techniques because ... 
 
 Here is an example of an original image and an gray image:
+![gray][image4] ![original][image5]
 
-![original gray][]
 
 The difference between the original data set and the augmented data set is the following         
 Number of old training examples is 34799         
-Number of new training examples is  135342         
-Image data shape is  (135342, 32, 32, 3)       
+Number of new training examples is  125392         
+Image data shape is  (125392, 32, 32, 3)       
 old mean = 809      
-new mean = 3147       
+new mean = 2916       
 old variance = 392816       
-new variance = 92519      
+new variance = 162136      
 #########################  number of each sign occurrence #########################    
 | ClassID         		|     Occurrence	|  Name |
 |:--------:|:------------------:|:--------------------------------------:|  
-| 5.0	 | occurrence =3964	| Speed limit (80km/h)  |   
-| 25.0	| occurrence =3806	|Road work|
-|1.0	| occurrence =3683|	Speed limit (30km/h)|
-|13.0	| occurrence =3624|	Yield|
-|12.0	| occurrence =3551|	Priority road|
-|35.0	| occurrence =3549|	Ahead only|
-|2.0	| occurrence =3478|	Speed limit (50km/h)|
-|9.0	| occurrence =3386|	No passing|
-|14.0	| occurrence =3298|	Stop|
-|38.0|	 occurrence =3277	|Keep right|
-|17.0|	 occurrence =3266|	No entry|
-|16.0|	 occurrence =3210|	Vehicles over 3.5 metric tons prohibited|
-|7.0|	 occurrence =3202|	Speed limit (100km/h)|
-|11.0|	 occurrence =3196|	Right-of-way at the next intersection|
-|28.0|	 occurrence =3174|	Children crossing|
-|8.0|	 occurrence =3164|	Speed limit (120km/h)|
-|31.0|	 occurrence =3162|	Wild animals crossing|
-|21.0|	 occurrence =3138|	Double curve|
-|4.0|	 occurrence =3132|	Speed limit (70km/h)|
-|10.0|	 occurrence =3123|	No passing for vehicles over 3.5 metric tons
-|20.0|	 occurrence =3120|	Dangerous curve to the right|
-|34.0|	 occurrence =3110|	Turn left ahead|
-|39.0|	 occurrence =3104|	Keep left|
-|22.0|	 occurrence =3090|	Bumpy road|
-|26.0|	 occurrence =3090|	Traffic signals|
-|19.0|	 occurrence =3087|	Dangerous curve to the left|
-|27.0|	 occurrence =3075|	Pedestrians|
-|3.0|	 occurrence =3054|	Speed limit (60km/h)|
-|29.0|	 occurrence =3035|	Bicycles crossing|
-|24.0|	 occurrence =3026|	Road narrows on the right|
-|40.0|	 occurrence =3020|	Roundabout mandatory|
-|33.0|	 occurrence =3014|	Turn right ahead|
-|18.0|	 occurrence =3010|	General caution|
-6.0	 |occurrence =3000|	End of speed limit (80km/h)|
-36.0|	 occurrence =2992|	Go straight or right|
-30.0|	 occurrence =2990|	Beware of ice/snow|
-15.0|	 occurrence =2976|	No vehicles|
-23.0|	 occurrence =2970|	Slippery road|
-41.0|	 occurrence =2964|	End of no passing|
-37.0|	 occurrence =2679|	Go straight or left|
-0.0	 |occurrence =2594	|Speed limit (20km/h)|
-42.0|	 occurrence =2590|	End of no passing by vehicles over 3.5 metric tons|
-32.0|	 occurrence =2369|	End of all speed and passing limits|
+| 5	  | occurrence =3964	| Speed limit (80km/h)  |   
+| 25	 | occurrence =3806	|Road work|
+|1 | occurrence =3683|	Speed limit (30km/h)|
+|13	| occurrence =3624|	Yield|
+|12	| occurrence =3551|	Priority road|
+|35	| occurrence =3549|	Ahead only|
+|2	 | occurrence =3478|	Speed limit (50km/h)|
+|9	 | occurrence =3386|	No passing|
+|14	| occurrence =3298|	Stop|
+|38 |	 occurrence =3277	|Keep right|
+|17 |	 occurrence =3266|	No entry|
+|16 |	 occurrence =3210|	Vehicles over 3.5 metric tons prohibited|
+|7 |	 occurrence =3202|	Speed limit (100km/h)|
+|11 |	 occurrence =3196|	Right-of-way at the next intersection|
+|28 |	 occurrence =3174|	Children crossing|
+|8 |	 occurrence =3164|	Speed limit (120km/h)|
+|31 |	 occurrence =3162|	Wild animals crossing|
+|21 |	 occurrence =3138|	Double curve|
+|4 |	 occurrence =3132|	Speed limit (70km/h)|
+|10 |	 occurrence =3123|	No passing for vehicles over 3.5 metric tons
+|20 |	 occurrence =3120|	Dangerous curve to the right|
+|34 |	 occurrence =3110|	Turn left ahead|
+|39 |	 occurrence =3104|	Keep left|
+|22 |	 occurrence =3090|	Bumpy road|
+|26 |	 occurrence =3090|	Traffic signals|
+|19 |	 occurrence =3087|	Dangerous curve to the left|
+|27 |	 occurrence =3075|	Pedestrians|
+|3 |	 occurrence =3054|	Speed limit (60km/h)|
+|29 |	 occurrence =3035|	Bicycles crossing|
+|24 |	 occurrence =3026|	Road narrows on the right|
+|40 |	 occurrence =3020|	Roundabout mandatory|
+|33|	 occurrence =3014|	Turn right ahead|
+|18|	 occurrence =3010|	General caution|
+|6	 |occurrence =3000|	End of speed limit (80km/h)|
+|36 |	 occurrence =2992|	Go straight or right|
+|30|	 occurrence =2990|	Beware of ice/snow|
+|15|	 occurrence =2976|	No vehicles|
+|23|	 occurrence =2970|	Slippery road|
+|41|	 occurrence =2964|	End of no passing|
+|37|	 occurrence =2679|	Go straight or left|
+|0	 |occurrence =2594	|Speed limit (20km/h)|
+|42|	 occurrence =2590|	End of no passing by vehicles over 3.5 metric tons|
+|32 |	 occurrence =2369|	End of all speed and passing limits|
 
 
 
