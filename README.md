@@ -22,9 +22,16 @@ The goals / steps of this project are the following:
 [image5]: ./examples/gray_original.png "Gray original"
 [image6]: ./examples/dropout.png "With Dropout"
 [image7]: ./examples/without_dropout.png "Without Dropout"
-[image8]: ./examples/placeholder.png "Traffic Sign 5"
-[image6]: ./examples/placeholder.png "Traffic Sign 3"
-[image6]: ./examples/placeholder.png "Traffic Sign 3"
+[image8]: ./examples/batch_size_128.png "BATCH SIZE 128"
+[image9]: ./examples/batch_size_512.png "BATCH SIZE 512"
+[image10]: ./examples/batch_size_1024.png "BATCH SIZE 1024"
+
+[image11]: ./test_images/3_Speed_limit_(60 km:h).png "Traffic Sign 5"
+[image12]: ./test_images/14_stop.png "Traffic Sign 5"
+[image13]: ./test_images/25_Roadworks.png "Traffic Sign 5"
+[image14]: ./test_images/27_Pedestrians.png "Traffic Sign 5"
+[image15]: ./test_images/38_Keep_right.png "Traffic Sign 5"
+
 
 ## Rubric Points
 
@@ -168,105 +175,155 @@ My final model consisted of the following layers:
 
 #### 3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
 
-Frist of all I used same parameters as the solution on LeNet-Lab. which has: 
-**learning_rate**  = 0.001
-**epochs** = 10
-**batch_size** = 128
-Then I played with these paramaters and my result is that 
-I select random number for learning rate between (0.001, 0.0001). but it did not give much improvment on trained dataset.
-For epochs, from 10 to 250 was chosen, however, I found that for large data more than 70K it needs at least 25 to reach .93, since increasing the epochs it only result on overfitting most of the time.
-batch size 128 was good for the model to have a nice learning curave, because when I tried bigger batch size (256 - 1024), the model learn slower and did not give any improvement at all. 
-my final result:
-**learning_rate** = 0.001
-**epochs** = 25
-**batch_size** = 128
+Frist of all I used same parameters as the solution on LeNet-Lab. which has:         
+**learning_rate**  = 0.001        
+**epochs** = 10           
+**batch_size** = 128            
+Then I played with these paramaters and my result is that             
+I select random number for learning rate between (0.001, 0.0001). but it did not give much improvment on trained dataset.     
+For epochs, from 10 to 250 was chosen, however, I found that for large data more than 70K it needs at least 25 to reach .93, since increasing the epochs it only result on overfitting most of the time.    
 
+batch size 128 was good for the model to have a nice learning curave, because when I tried bigger batch size (256 - 1024), the model learn slower and did not give any improvement at all.        
 
-#### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
+Here are some images to show different batch sizes were chosen
 
-My final model results were:
-* training set accuracy of  0.986
-* validation set accuracy of .9305
-* test set accuracy of 0.906
-
-If an iterative approach was chosen:
-* **What was the first architecture that was tried and why was it chosen?**          
- `LeNet-5 was selected as it was recommend by Udacity and it was build for solving similar issues`
+![128][image8] ![512][image9]  ![1024][image10] 
  
-* **What were some problems with the initial architecture?**
+
+
+my final result:            
+**learning_rate** = 0.001            
+**epochs** = 25               
+**batch_size** = 128              
+
+
+#### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.              
+
+My final model results were:             
+* training set accuracy of  **0.986**                  
+* validation set accuracy of **0.9305 **              
+* test set accuracy of **0.906**                  
+
+If an iterative approach was chosen:            
+* **What was the first architecture that was tried and why was it chosen?**                  
+ `LeNet-5 was selected as it was recommend by Udacity and it was build for solving similar issues`           
+ 
+* **What were some problems with the initial architecture?**              
 ```
 it give the accuracy needed which was .93 after tuning the data, however the initial architecture gaiv higher variance for accuracy.
 
 here are two examples the right one without using dropout
 ![gray][image6] ![original][image7]
+```          
+
+* **How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.**                 
+
+`I added dropout of .5 after the seconde fully connected layer`            
+
+
+* **Which parameters were tuned? How were they adjusted and why?**                   
+`None`         
+
+* **What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?**          
 ```
-
-* **How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.**       
-
-`I added dropout of .5 after the second fully connect layer`      
-
-
-* **Which parameters were tuned? How were they adjusted and why?**         
-`None`
-
-* **What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?**        
-`convolution layer works best because it divided the features into smaller pieces. and each convolution layer is responsible to identify its own features.
+convolution layer works best because it divided the features into smaller pieces. and each convolution layer is responsible to identify its own features.
 
 For example, one convolution layer is responsible for identifing the left and right numbers in a trafic sign separately, and another convolution layer would figure out the two number combination. 
-`
+```         
 
-If a well known architecture was chosen:
-* **What architecture was chosen?**      
-`LeNet-5`      
-* **Why did you believe it would be relevant to the traffic sign application?**       
-`Since traffic sign application is basically a normal classification problem, then LeNet-5 is a good initial architecture to start learning about classification. it gives the basic understanding of convolution neural network (CNN).`   
+If a well known architecture was chosen:       
+* **What architecture was chosen?**         
+`LeNet-5`       
+* **Why did you believe it would be relevant to the traffic sign application?**         
+```
+Since traffic sign application is basically a normal classification problem, then LeNet-5 is a good initial architecture to start learning about classification. it gives the basic understanding of convolution neural network (CNN).
+```     
 
-* **How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?**
-`Since the accuracy reach the requirements of this project then the model is working well`
+* **How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?**        
+`Since the accuracy reach the requirements of this project then the model is working well`          
  
 
-### Test a Model on New Images
+### Test a Model on New Images        
 
 ####1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
 
 Here are five German traffic signs that I found on the web:
 
-![alt text][image4] ![alt text][image5] ![alt text][image6] 
-![alt text][image7] ![alt text][image8]
+![alt text][image11] ![alt text][image12] ![alt text][image13] 
+![alt text][image14] ![alt text][image15]
 
-The first image might be difficult to classify because ...
+The pedestrians image might be difficult to classify because when I apply the augmentation to the dataset, the pedestrians trafic sign has many fake images from augmentation, it went from 210 to 2693.
+ 
 
-####2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
+#### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
 Here are the results of the prediction:
 
 | Image			        |     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
 | Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
+| Speed limit (60km/h)     			| Speed limit (60km/h) 										|
+| Road work					| Road work											|
+| Pedestrians	      		| Road narrows on the right					 				|
+|  Keep right 		|  Keep right       							|
 
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of 90%.
 
 #### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
+The code for making predictions on my final model is located in the 28th cell of the Ipython notebook.
 
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
+For the first image, the model is relatively sure that this is a Speed limit (60km/h)  sign (probability of 0.999), and the image does contain a Speed limit (60km/h) sign. The top five soft max probabilities were              
 
 | Probability         	|     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
+| 99.668%         			| Speed limit (60km/h)  									| 
+| 0.313%     				| Speed limit (80km/h)										|
+| 0.011%					| Speed limit (50km/h)											|
+| 0.005%	      			| No passing					 				|
+| 0.002%			    | Speed limit (30km/h)    							|
 
 
-For the second image ... 
+For the seconde image **Road work**          
+
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+|99.999%	|Road work|
+|0.001%	|Bumpy road|
+|0.000%	|Road narrows on the right|
+|0.000% |	Bicycles crossing|
+|0.000%	|Go straight or left|
+
+For the third image **Pedestrians**          
+
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+|99.667%|Road narrows on the right|
+|0.222%|Pedestrians|
+|0.069%|Bicycles crossing|
+|0.037%|Road work|
+|0.005%|Children crossing|
+
+For the forth image **Stop**          
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+|99.999%|Stop|
+|0.001%|Speed limit (120km/h)|
+|0.000%|Turn right ahead|
+|0.000%|Speed limit (60km/h)|
+|0.000%|No vehicles|
+
+For the fifth image **Keep right**        
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+|100.000%	|Keep right|
+|0.000%	|No entry|
+|0.000%	|Bicycles crossing|
+|0.000% |	Turn left ahead|
+|0.000%	|Stop|
+
+
 
 ### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
 #### 1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
