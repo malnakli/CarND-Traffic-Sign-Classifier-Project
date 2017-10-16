@@ -26,7 +26,7 @@ The goals / steps of this project are the following:
 [image9]: ./examples/batch_size_512.png "BATCH SIZE 512"
 [image10]: ./examples/batch_size_1024.png "BATCH SIZE 1024"
 
-[image11]: ./test_images/3_Speed_limit_(60 km:h).png "Traffic Sign 5"
+[image11]: ./test_images/3_Speed_limit_60_km_h.png "Traffic Sign 5"
 [image12]: ./test_images/14_stop.png "Traffic Sign 5"
 [image13]: ./test_images/25_Roadworks.png "Traffic Sign 5"
 [image14]: ./test_images/27_Pedestrians.png "Traffic Sign 5"
@@ -201,7 +201,7 @@ my final result:
 
 My final model results were:             
 * training set accuracy of  **0.986**                  
-* validation set accuracy of **0.9305 **              
+* validation set accuracy of **0.9305**              
 * test set accuracy of **0.906**                  
 
 If an iterative approach was chosen:            
@@ -306,7 +306,7 @@ For the third image **Pedestrians**
 |0.005%|Children crossing|
 
 For the forth image **Stop**          
-| Probability         	|     Prediction	        					| 
+| Probability         |     Prediction	|       
 |:---------------------:|:---------------------------------------------:| 
 |99.999%|Stop|
 |0.001%|Speed limit (120km/h)|
@@ -314,22 +314,16 @@ For the forth image **Stop**
 |0.000%|Speed limit (60km/h)|
 |0.000%|No vehicles|
 
-For the fifth image **Keep right**        
-| Probability         	|     Prediction	        					| 
+For the fifth image **Keep right**            
+| Probability         	|     Prediction|            
 |:---------------------:|:---------------------------------------------:| 
 |100.000%	|Keep right|
 |0.000%	|No entry|
 |0.000%	|Bicycles crossing|
-|0.000% |	Turn left ahead|
+|0.000% |Turn left ahead|
 |0.000%	|Stop|
 
 
 
 ### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
 #### 1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
-
-
-
-
-https://arxiv.org/pdf/1604.04004.pdf
-https://machinelearningmastery.com/gentle-introduction-to-the-bias-variance-trade-off-in-machine-learning/
