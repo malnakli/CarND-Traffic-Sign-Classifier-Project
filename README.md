@@ -87,57 +87,61 @@ old mean = 809
 new mean = 2916       
 old variance = 392816       
 new variance = 162136      
-#########################  number of each sign occurrence #########################    
-| ClassID         		|     Occurrence	|  Name |
-|:--------:|:------------------:|:--------------------------------------:|  
-| 5	  | occurrence =3964	| Speed limit (80km/h)  |   
-| 25	 | occurrence =3806	|Road work|
-|1 | occurrence =3683|	Speed limit (30km/h)|
-|13	| occurrence =3624|	Yield|
-|12	| occurrence =3551|	Priority road|
-|35	| occurrence =3549|	Ahead only|
-|2	 | occurrence =3478|	Speed limit (50km/h)|
-|9	 | occurrence =3386|	No passing|
-|14	| occurrence =3298|	Stop|
-|38 |	 occurrence =3277	|Keep right|
-|17 |	 occurrence =3266|	No entry|
-|16 |	 occurrence =3210|	Vehicles over 3.5 metric tons prohibited|
-|7 |	 occurrence =3202|	Speed limit (100km/h)|
-|11 |	 occurrence =3196|	Right-of-way at the next intersection|
-|28 |	 occurrence =3174|	Children crossing|
-|8 |	 occurrence =3164|	Speed limit (120km/h)|
-|31 |	 occurrence =3162|	Wild animals crossing|
-|21 |	 occurrence =3138|	Double curve|
-|4 |	 occurrence =3132|	Speed limit (70km/h)|
-|10 |	 occurrence =3123|	No passing for vehicles over 3.5 metric tons
-|20 |	 occurrence =3120|	Dangerous curve to the right|
-|34 |	 occurrence =3110|	Turn left ahead|
-|39 |	 occurrence =3104|	Keep left|
-|22 |	 occurrence =3090|	Bumpy road|
-|26 |	 occurrence =3090|	Traffic signals|
-|19 |	 occurrence =3087|	Dangerous curve to the left|
-|27 |	 occurrence =3075|	Pedestrians|
-|3 |	 occurrence =3054|	Speed limit (60km/h)|
-|29 |	 occurrence =3035|	Bicycles crossing|
-|24 |	 occurrence =3026|	Road narrows on the right|
-|40 |	 occurrence =3020|	Roundabout mandatory|
-|33|	 occurrence =3014|	Turn right ahead|
-|18|	 occurrence =3010|	General caution|
-|6	 |occurrence =3000|	End of speed limit (80km/h)|
-|36 |	 occurrence =2992|	Go straight or right|
-|30|	 occurrence =2990|	Beware of ice/snow|
-|15|	 occurrence =2976|	No vehicles|
-|23|	 occurrence =2970|	Slippery road|
-|41|	 occurrence =2964|	End of no passing|
-|37|	 occurrence =2679|	Go straight or left|
-|0	 |occurrence =2594	|Speed limit (20km/h)|
-|42|	 occurrence =2590|	End of no passing by vehicles over 3.5 metric tons|
-|32 |	 occurrence =2369|	End of all speed and passing limits|
+
+#########################  number of each sign occurrence #########################   
+
+| ClassID 	|     Occurrences	|  Name |            
+|:--------:|:------------------:|:--------------------------------------:|              
+|25|	3806|	Road work|
+|1|	3683|	Speed limit (30km/h)|
+|13|	3624|	Yield|
+|12|	3551|	Priority road|
+|2|	3478	|Speed limit (50km/h)|
+|9|	3386	|No passing|
+|14|	3298	|Stop|
+|38|	3277|	Keep right|
+|7|	3202|	Speed limit (100km/h)|
+|11|	3196	|Right-of-way at the next intersection|
+|8|	3164	|Speed limit (120km/h)|
+|31|	3162|	Wild animals crossing|
+|4|	3132|	Speed limit (70km/h)|
+|10|	3123|	No passing for vehicles over 3.5 metric tons|
+|3|	3054|	Speed limit (60km/h)|
+|33|	3014	|Turn right ahead|
+|18|	3010|	General caution|
+|15|	2976	|No vehicles|
+|23|	2970|	Slippery road|
+|16|	2925	|Vehicles over 3.5 metric tons prohibited|
+|20|	2885	|Dangerous curve to the right|
+|34|	2835|	Turn left ahead|
+|24|	2827|	Road narrows on the right|
+|29|	2820|	Bicycles crossing|
+|22|	2814|	Bumpy road|
+|5|	2807|	Speed limit (80km/h)|
+|6|	2760|	End of speed limit (80km/h)|
+|36|	2750|	Go straight or right|
+|40|	2748|	Roundabout mandatory|
+|35|	2726|	Ahead only|
+|28|	2725|	Children crossing|
+|17|	2697|	No entry|
+|27|	2693|	Pedestrians|
+|39|	2668|	Keep left|
+|30|	2665|	Beware of ice/snow|
+|26|	2665|	Traffic signals|
+|21|	2660|	Double curve|
+|19|	2574|	Dangerous curve to the left|
+|41|	2478|	End of no passing|
+|37|	2238|	Go straight or left|
+|42|	2170|	End of no passing by vehicles over 3.5 metric tons|
+|0|	2168|	Speed limit (20km/h)|
+|32|	1988|	End of all speed and passing limits|
 
 
 
-####2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
+#### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
 
+The model is same as LeNet-5 except that I added dropout before the final fully connected layer. 
+The reason is that after 
 My final model consisted of the following layers:
 
 | Layer         		|     Description	        				| 
@@ -147,19 +151,20 @@ My final model consisted of the following layers:
 | RELU					|	 Activation	 function					|
 | Max pooling	      	| 2x2 stride,  outputs 14x14x6|
 | Convolution 3x3	    |  1x1 stride, VALID padding, outputs 10x10x16|
-| RELU					|		Activation	 function	       		|
+| RELU					    |		Activation	 function	       		|
 | Max pooling	      	| 2x2 stride,  outputs 5x5x16                 |
 | Flatten               | outputs 400                               |
 | Fully connected		| outputs 120        						|
-| RELU					|		Activation	 function	       		|
+| RELU					   |		Activation	 function	       		|
 | Fully connected		| outputs 80        						|
 | RELU					|		Activation	 function	       		|
-| dropout               | 50% in order to smath the curve |
-| Softmax				| output = 43      								
+| dropout               | 50% in order to smooth the traing |
+| Fully connected				| output = 43      								
 |                       |	                        |
 
 
-####3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
+
+#### 3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
 
 To train the model, I used an ....
 
@@ -209,7 +214,7 @@ Here are the results of the prediction:
 
 The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
 
-####3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
+#### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
 The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
 
@@ -227,7 +232,7 @@ For the first image, the model is relatively sure that this is a stop sign (prob
 For the second image ... 
 
 ### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
-####1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
+#### 1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
 
 
 
