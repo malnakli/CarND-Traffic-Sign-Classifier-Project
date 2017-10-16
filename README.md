@@ -50,11 +50,11 @@ You're reading it! and here is a link to my [project code](https://github.com/ma
 I used the numpy library and defualt python  to calculate summary statistics of the traffic
 signs data set:
 
-* The size of training set is 34799
-* The size of the validation set is 4410
-* The size of test set is 12630
-* The shape of a traffic sign image is (32, 32, 3)
-* The number of unique classes/labels in the data set is 43
+* The size of training set is **34799**
+* The size of the validation set is **4410**
+* The size of test set is **12630**
+* The shape of a traffic sign image is **(32, 32, 3)**
+* The number of unique classes/labels in the data set is **43**
 
 #### 2. Include an exploratory visualization of the dataset.
 
@@ -66,38 +66,26 @@ Here is an exploratory visualization of the data set. It is a bar chart showing 
 
 #### 1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
 
-As a first step, I decided add additinal data because the variance between the dataset is very high which is 392816, and the mean is 809. Therefore, I decided to use agumtation in order to generate fake data. the [imgaug](http://imgaug.readthedocs.io/en/latest/index.html ) library was chosen to facilitate the agumtation.
+As a first step, I decided add additinal data because the variance between the dataset is very high which is **392816**, and the mean is **809**. Therefore, I decided to use agumtation in order to generate fake data. the [imgaug](http://imgaug.readthedocs.io/en/latest/index.html ) library was chosen to facilitate the agumtation.
 
-There many techniques were select look at **augment_data(images)** for more info. Here is some of them
-**rotatation:** to teach the network how to recover from a poor position. 
-**CropAndPad:** I put a small percetage (-0.25, 0.25) in order to make sure the sign still present on an image, but a small piece of the sign is missing. 
-**ChangeColorspace:** I found that changing the color space it give better result.
+There were many techniques selected, look at **augment_data(images)** for more info. Here are some of them:               
+**rotatation:** to teach the network how to recover from a poor position.            
+**CropAndPad:** I put a small percetage (-0.25, 0.25) in order to make sure the sign still present on an image.                  
+**ChangeColorspace:** I found that changing the  color space it give a better result.          
 
 Here is an example of an original image and an augmented image:
 
 ![augmented][image2] ![original][image3]
 
-
-As a second step, I normalized the image data by using (sklearn.preprocessing.scale function).
-The reason behind normalization is that if a feature has a variance that is orders of magnitude larger than others, it may  make the estimator unable to learn from other features correctly as expected.
-
-Lastly I decided to convert the image to gray because I want to teach the netwrok that color does not matter on determining the trafic sign.
-
-
-Here is an example of an original image and an gray image:
-![gray][image4] ![original][image5]
-
-
 The difference between the original data set and the augmented data set is the following         
-Number of old training examples is 34799         
-Number of new training examples is  125392         
-Image data shape is  (125392, 32, 32, 3)       
-old mean = 809      
-new mean = 2916       
-old variance = 392816       
-new variance = 162136      
+Number of old training examples is **34799**        
+Number of new training examples is  **125392**        Image data shape is  **(125392, 32, 32, 3)**         
+Old mean is **809**        
+New mean is **2916**         
+Old variance is **392816**        
+New variance is **162136**        
 
-#########################  number of each sign occurrence #########################   
+#### number of each sign occurrence   
 
 | ClassID 	|     Occurrences	|  Name |            
 |:--------:|:------------------:|:--------------------------------------:|              
@@ -146,12 +134,23 @@ new variance = 162136
 |32|	1988|	End of all speed and passing limits|
 
 
+As a second step, I normalized the image data by using (sklearn.preprocessing.scale function).     
+The reason behind normalization is that if a feature has a variance that is orders of magnitude larger than others, it may make the model unable to learn from other features correctly as expected.     
+
+Lastly I decided to convert the image to grayscale because I want to teach the netwrok that colors do not matter on determining the trafic sign.      
+
+Here is an example of an original image and an gray image:          
+
+![Gray][image4] ![original][image5]
+
+
+
 
 #### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
 
-The model is same as LeNet-5 except that I added dropout before the final fully connected layer. 
-The reason is that after 
-My final model consisted of the following layers:
+The model is same as LeNet-5 architecture except that I added dropout before the final fully connected layer. 
+          
+**My final model consisted of the following layers:**
 
 | Layer         		|     Description	        				| 
 |:---------------------:|:---------------------------------------------:| 
@@ -180,8 +179,8 @@ Frist of all I used same parameters as the solution on LeNet-Lab. which has:
 **epochs** = 10           
 **batch_size** = 128            
 Then I played with these paramaters and my result is that             
-I select random number for learning rate between (0.001, 0.0001). but it did not give much improvment on trained dataset.     
-For epochs, from 10 to 250 was chosen, however, I found that for large data more than 70K it needs at least 25 to reach .93, since increasing the epochs it only result on overfitting most of the time.    
+I select a random number for learning rate between (0.001, 0.0001). but it did not give much improvment on trained dataset.     
+For epochs, from 10 to 250 was selected, however, I found that for large data more than 70K it needs at least 25 to reach .93, since increasing the epochs it only result on overfitting most of the time.    
 
 batch size 128 was good for the model to have a nice learning curave, because when I tried bigger batch size (256 - 1024), the model learn slower and did not give any improvement at all.        
 
@@ -191,7 +190,7 @@ Here are some images to show different batch sizes were chosen
  
 
 
-my final result:            
+#### My final result:            
 **learning_rate** = 0.001            
 **epochs** = 25               
 **batch_size** = 128              
@@ -206,15 +205,18 @@ My final model results were:
 
 If an iterative approach was chosen:            
 * **What was the first architecture that was tried and why was it chosen?**                  
- `LeNet-5 was selected as it was recommend by Udacity and it was build for solving similar issues`           
+ `LeNet-5 was selected as it was recommended by Udacity and it was build for solving similar issues`           
  
 * **What were some problems with the initial architecture?**              
 ```
-it give the accuracy needed which was .93 after tuning the data, however the initial architecture gaiv higher variance for accuracy.
+it gives the accuracy needed which was .93 after augment & apply pre-processing to data. 
+However, the initial architecture gaiv higher variance for accuracy.
 
-here are two examples the right one without using dropout
-![gray][image6] ![original][image7]
-```          
+Here are two examples: the seconde one is without using dropout
+
+```  
+![With Dropout][image6] 
+![without dropout][image7]        
 
 * **How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.**                 
 
@@ -226,9 +228,11 @@ here are two examples the right one without using dropout
 
 * **What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?**          
 ```
-convolution layer works best because it divided the features into smaller pieces. and each convolution layer is responsible to identify its own features.
+convolution layer works best because it divided the features into smaller pieces.    
+And each convolution layer is responsible to identify some features.
 
-For example, one convolution layer is responsible for identifing the left and right numbers in a trafic sign separately, and another convolution layer would figure out the two number combination. 
+For example, one convolution layer is responsible for identifing the left and right numbers in a trafic sign separately,
+and another convolution layer would figure out the two number combination. 
 ```         
 
 If a well known architecture was chosen:       
@@ -236,7 +240,9 @@ If a well known architecture was chosen:
 `LeNet-5`       
 * **Why did you believe it would be relevant to the traffic sign application?**         
 ```
-Since traffic sign application is basically a normal classification problem, then LeNet-5 is a good initial architecture to start learning about classification. it gives the basic understanding of convolution neural network (CNN).
+Since traffic sign application is basically a normal classification problem,    
+then LeNet-5 is a good initial architecture for starter to learn a simple architecture for solving a classification problem.       
+Also it gives the basic understanding of convolution neural network (CNN).
 ```     
 
 * **How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?**        
@@ -245,14 +251,14 @@ Since traffic sign application is basically a normal classification problem, the
 
 ### Test a Model on New Images        
 
-####1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
+#### 1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
 
 Here are five German traffic signs that I found on the web:
 
 ![alt text][image11] ![alt text][image12] ![alt text][image13] 
 ![alt text][image14] ![alt text][image15]
 
-The pedestrians image might be difficult to classify because when I apply the augmentation to the dataset, the pedestrians trafic sign has many fake images from augmentation, it went from 210 to 2693.
+The pedestrians image might be difficult to classify because when I apply the augmentation to the dataset, the pedestrians trafic sign has many fake images from augmentation, it went from 210 to 2693 images.
  
 
 #### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
@@ -305,7 +311,8 @@ For the third image **Pedestrians**
 |0.037%|Road work|
 |0.005%|Children crossing|
 
-For the forth image **Stop**          
+For the forth image **Stop**  
+
 | Probability         |     Prediction	|       
 |:---------------------:|:---------------------------------------------:| 
 |99.999%|Stop|
@@ -314,7 +321,8 @@ For the forth image **Stop**
 |0.000%|Speed limit (60km/h)|
 |0.000%|No vehicles|
 
-For the fifth image **Keep right**            
+For the fifth image **Keep right** 
+
 | Probability         	|     Prediction|            
 |:---------------------:|:---------------------------------------------:| 
 |100.000%	|Keep right|
@@ -322,7 +330,6 @@ For the fifth image **Keep right**
 |0.000%	|Bicycles crossing|
 |0.000% |Turn left ahead|
 |0.000%	|Stop|
-
 
 
 ### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
